@@ -38,6 +38,7 @@ export default function LeaderboardPage() {
               </div>
               <div className="leaderboard-team">{p.team}</div>
             </div>
+
             <div className="leaderboard-points">{p.points} pt</div>
           </div>
         ))}

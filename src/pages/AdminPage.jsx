@@ -91,7 +91,6 @@ export default function AdminPage() {
     <div className="panel admin-panel-neo">
       <div className="panel-title">Pannello Admin</div>
 
-      {/* PUNTI */}
       <div className="admin-card">
         <h3>Punti giocatori</h3>
 
@@ -110,7 +109,7 @@ export default function AdminPage() {
 
         <input
           className="simple-input"
-          placeholder="Nuovi punti"
+          placeholder="Nuovi punti (numero)"
           value={points}
           onChange={(e) => setPoints(e.target.value)}
         />
@@ -120,7 +119,6 @@ export default function AdminPage() {
         </button>
       </div>
 
-      {/* TIMER */}
       <div className="admin-card">
         <h3>Timer prossima sfida</h3>
 
@@ -133,12 +131,17 @@ export default function AdminPage() {
           onChange={(e) => setTimerMinutes(e.target.value)}
         />
 
-        <button className="simple-button" onClick={startTimer}>Start</button>
-        <button className="simple-button" onClick={stopTimer}>Stop</button>
-        <button className="simple-button" onClick={resetTimer}>Reset</button>
+        <button className="simple-button" onClick={startTimer}>
+          Start
+        </button>
+        <button className="simple-button" onClick={stopTimer}>
+          Stop
+        </button>
+        <button className="simple-button" onClick={resetTimer}>
+          Reset
+        </button>
       </div>
 
-      {/* CALENDARIO */}
       <div className="admin-card">
         <h3>Aggiungi sfida calendario</h3>
 
@@ -161,7 +164,6 @@ export default function AdminPage() {
         </button>
       </div>
 
-      {/* NOTIFICHE */}
       <div className="admin-card">
         <h3>Notifica push</h3>
 

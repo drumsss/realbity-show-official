@@ -54,38 +54,17 @@ export default function HomePage() {
   const m = String(Math.floor((remaining % 3600) / 60)).padStart(2, "0");
   const s = String(remaining % 60).padStart(2, "0");
 
-  // Percentuale per cerchio animato
-  const totalSeconds = 3600 * 24; // fallback
-  const progress = Math.max(0, Math.min(1, remaining / totalSeconds));
-
   return (
     <div className="home-wrapper">
-      {/* LOGO */}
       <img src={logoColori} alt="REALBITY SHOW" className="home-logo-top" />
 
       <div className="home-grid">
         {/* TIMER */}
-        <div className="panel timer-panel-neo">
+        <div className="panel timer-panel">
           <div className="panel-title">Prossima sfida</div>
 
-          {/* Cerchio animato */}
-          <div className="timer-circle">
-            <svg className="timer-svg">
-              <circle className="bg" cx="50%" cy="50%" r="45%"></circle>
-              <circle
-                className="progress"
-                cx="50%"
-                cy="50%"
-                r="45%"
-                style={{
-                  strokeDashoffset: `calc(283 - 283 * ${progress})`,
-                }}
-              ></circle>
-            </svg>
-
-            <div className="timer-digits">
-              <span>{h}</span>:<span>{m}</span>:<span>{s}</span>
-            </div>
+          <div className="timer-main">
+            <span>{h}</span>:<span>{m}</span>:<span>{s}</span>
           </div>
 
           <div className="timer-label">Tempo rimanente</div>
@@ -96,12 +75,12 @@ export default function HomePage() {
           <div className="panel-title">Punteggi squadre</div>
 
           <div className="teams-row">
-            <div className="team-card team-neo">
+            <div className="team-card">
               <div className="team-name licatadrums">LICATADRUMS</div>
               <div className="team-points">{teamPoints.LICATADRUMS} pt</div>
             </div>
 
-            <div className="team-card team-neo">
+            <div className="team-card">
               <div className="team-name beauties">BEAUTIES</div>
               <div className="team-points">{teamPoints.BEAUTIES} pt</div>
             </div>
