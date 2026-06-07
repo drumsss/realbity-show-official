@@ -1,156 +1,133 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
-
+import { useState } from "react";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
+import LeaderboardPage from "./pages/LeaderboardPage";
 import ChatPage from "./pages/ChatPage";
 import CalendarPage from "./pages/CalendarPage";
 import AdminPage from "./pages/AdminPage";
-import LeaderboardPage from "./pages/LeaderboardPage";
-
 import logoBW from "./assets/logo_bw.png";
 
-function Layout() {
-  const navigate = useNavigate();
-  const location = useLocation();
+export default function App() {
+  const [page, setPage] = useState("home");
+
   const user = JSON.parse(localStorage.getItem("realbityUser"));
 
-  if (!user) return <Navigate to="/login" replace />;
+  const handleLogin = () => {
+    window.location.reload();
+  };
 
-  const path = location.pathname;
+  if (!user) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
+  const renderPage = () => {
+    switch (page) {
+      case "home":
+        return <HomePage />;
+      case "leaderboard":
+        return <LeaderboardPage />;
+      case "chat":
+        return <ChatPage />;
+      case "calendar":
+        return <CalendarPage />;
+      case "admin":
+        return user.isAdmin ? <AdminPage /> : <HomePage />;
+      default:
+        return <HomePage />;
+    }
+  };
 
   return (
     <div className="app-container">
       {/* SIDEBAR DESKTOP */}
       <div className="sidebar">
+        <img src={logoBW} alt="logo" className="header-logo-small" />
+
         <button
-          className={path === "/home" ? "active" : ""}
-          onClick={() => navigate("/home")}
+          className={page === "home" ? "active" : ""}
+          onClick={() => setPage("home")}
         >
-          <span className="icon">🏠</span> Home
+          🏠 Home
         </button>
 
         <button
-          className={path === "/chat" ? "active" : ""}
-          onClick={() => navigate("/chat")}
+          className={page === "leaderboard" ? "active" : ""}
+          onClick={() => setPage("leaderboard")}
         >
-          <span className="icon">💬</span> Chat
+          🏆 Classifica
         </button>
 
         <button
-          className={path === "/leaderboard" ? "active" : ""}
-          onClick={() => navigate("/leaderboard")}
+          className={page === "chat" ? "active" : ""}
+          onClick={() => setPage("chat")}
         >
-          <span className="icon">🏆</span> Classifica
+          💬 Chat
         </button>
 
         <button
-          className={path === "/calendar" ? "active" : ""}
-          onClick={() => navigate("/calendar")}
+          className={page === "calendar" ? "active" : ""}
+          onClick={() => setPage("calendar")}
         >
-          <span className="icon">📅</span> Calendario
-        </button>
-
-        {user.isAdmin && (
-          <button
-            className={path === "/admin" ? "active" : ""}
-            onClick={() => navigate("/admin")}
-          >
-            <span className="icon">🛠</span> Admin
-          </button>
-        )}
-      </div>
-
-      {/* BOTTOM BAR MOBILE */}
-      <div className="bottom-bar">
-        <button
-          className={path === "/home" ? "active" : ""}
-          onClick={() => navigate("/home")}
-        >
-          <span>🏠</span>
-          <small>Home</small>
-        </button>
-
-        <button
-          className={path === "/chat" ? "active" : ""}
-          onClick={() => navigate("/chat")}
-        >
-          <span>💬</span>
-          <small>Chat</small>
-        </button>
-
-        <button
-          className={path === "/leaderboard" ? "active" : ""}
-          onClick={() => navigate("/leaderboard")}
-        >
-          <span>🏆</span>
-          <small>Classifica</small>
-        </button>
-
-        <button
-          className={path === "/calendar" ? "active" : ""}
-          onClick={() => navigate("/calendar")}
-        >
-          <span>📅</span>
-          <small>Calendario</small>
+          📅 Calendario
         </button>
 
         {user.isAdmin && (
           <button
-            className={path === "/admin" ? "active" : ""}
-            onClick={() => navigate("/admin")}
+            className={page === "admin" ? "active" : ""}
+            onClick={() => setPage("admin")}
           >
-            <span>🛠</span>
-            <small>Admin</small>
+            ⚙️ Admin
           </button>
         )}
       </div>
 
       {/* CONTENUTO */}
-      <div className="main">
-        <div className="header">
-          <div className="header-left">
-            <img src={logoBW} alt="logo" className="header-logo-small" />
-            <div className="header-title">
-              {path === "/home" && "Home"}
-              {path === "/chat" && "Chat"}
-              {path === "/leaderboard" && "Classifica"}
-              {path === "/calendar" && "Calendario"}
-              {path === "/admin" && "Admin"}
-            </div>
-          </div>
-          <div className="header-user">{user.name}</div>
-        </div>
+      <div className="page">{renderPage()}</div>
 
-        <div className="page">
-          <Routes>
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/leaderboard" element={<LeaderboardPage />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="*" element={<Navigate to="/home" replace />} />
-          </Routes>
-        </div>
+      {/* BOTTOM BAR MOBILE */}
+      <div className="bottom-bar">
+        <button
+          className={page === "home" ? "active" : ""}
+          onClick={() => setPage("home")}
+        >
+          🏠
+          <span>Home</span>
+        </button>
+
+        <button
+          className={page === "leaderboard" ? "active" : ""}
+          onClick={() => setPage("leaderboard")}
+        >
+          🏆
+          <span>Classifica</span>
+        </button>
+
+        <button
+          className={page === "chat" ? "active" : ""}
+          onClick={() => setPage("chat")}
+        >
+          💬
+          <span>Chat</span>
+        </button>
+
+        <button
+          className={page === "calendar" ? "active" : ""}
+          onClick={() => setPage("calendar")}
+        >
+          📅
+          <span>Calendario</span>
+        </button>
+
+        {user.isAdmin && (
+          <button
+            className={page === "admin" ? "active" : ""}
+            onClick={() => setPage("admin")}
+          >
+            ⚙️
+            <span>Admin</span>
+          </button>
+        )}
       </div>
     </div>
-  );
-}
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/*" element={<Layout />} />
-      </Routes>
-    </BrowserRouter>
   );
 }
