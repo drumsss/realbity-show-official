@@ -41,7 +41,7 @@ export default function CalendarPage() {
         {DAYS.map((day) => {
           const list = getChallengesForDay(day.value);
           return (
-            <div key={day.value} className="calendar-day-rect">
+            <div key={day.value} className="calendar-day-card-neo">
               <div className="calendar-day-title">{day.label}</div>
 
               {list.length === 0 ? (

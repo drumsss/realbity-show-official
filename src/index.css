@@ -58,7 +58,6 @@ body {
 }
 
 .sidebar button {
-  position: relative;
   padding: 11px 14px;
   border-radius: 999px;
   border: 1px solid transparent;
@@ -71,7 +70,6 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  overflow: hidden;
 }
 
 .sidebar button:hover {
@@ -580,16 +578,4 @@ body {
 
 @keyframes pulseMic {
   0% { transform: scale(1); color: #ff4d6a; }
-  50% { transform: scale(1.2); color: #ff1f4d; }
-  100% { transform: scale(1); color: #ff4d6a; }
-}
-
-/* CALENDARIO — VERSIONE A COLONNA */
-.calendar-column {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.calendar-day-rect {
-  background: radial-gradient(circle at top, #1
+  50% { transform: scale(1.2); color: #ff1f4
