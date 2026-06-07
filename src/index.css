@@ -1,42 +1,27 @@
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* LOGIN — VERSIONE CYBERPUNK HARD PERFETTA */
+.login-wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-:root {
-  --bg: #03040a;
-  --panel: #0b0e1a;
-  --panel2: #11162a;
-  --accent: #ff009d;
-  --accent2: #00c8ff;
-  --text: #f2f2ff;
-  --muted: #8a8fb3;
-  --border: #1d2238;
-  --danger: #ff3b5c;
-}
-
-/* BODY */
-body {
-  background: radial-gradient(circle at top, #10152b 0%, #03040a 70%);
-  font-family: "Inter", system-ui, sans-serif;
-  color: var(--text);
-  overflow-x: hidden;
-}
-
-/* PANEL BASE */
-.panel {
+.login-card {
+  width: 100%;
+  max-width: 360px;
   background: linear-gradient(135deg, #0b0e1a, #11162a);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 0 30px rgba(255, 0, 157, 0.25);
+  border-radius: 20px;
+  padding: 26px 22px;
+  box-shadow: 0 0 35px rgba(255, 0, 157, 0.35);
+  text-align: center;
   position: relative;
   overflow: hidden;
 }
 
-.panel::before {
+.login-card::before {
   content: "";
   position: absolute;
   inset: -80px;
@@ -48,19 +33,48 @@ body {
   );
   filter: blur(60px);
   animation: spinGlow 8s linear infinite;
+  z-index: 0;
 }
 
-.panel-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: var(--accent2);
+.login-logo-img {
+  width: 160px;
+  margin: 0 auto 10px;
+  display: block;
+  filter: drop-shadow(0 0 10px var(--accent));
+  position: relative;
+  z-index: 2;
 }
 
-/* INPUTS */
-.simple-input,
-.input-field,
-select {
+.login-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 2;
+}
+
+.login-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.input-group {
+  margin-bottom: 14px;
+  text-align: left;
+  position: relative;
+  z-index: 2;
+}
+
+.input-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.input-field {
   width: 100%;
   padding: 10px 12px;
   border-radius: 12px;
@@ -70,296 +84,37 @@ select {
   font-size: 14px;
 }
 
-.simple-input:focus,
-.input-field:focus,
-select:focus {
+.input-field:focus {
   border-color: var(--accent2);
   box-shadow: 0 0 12px rgba(0, 200, 255, 0.4);
 }
 
-/* BUTTONS */
-.simple-button,
 .button-primary {
-  padding: 10px 16px;
+  width: 100%;
+  padding: 12px;
   border-radius: 999px;
   border: none;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   color: #050712;
   font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
+  margin-top: 10px;
   transition: 0.2s;
+  position: relative;
+  z-index: 2;
 }
 
-.simple-button:hover,
 .button-primary:hover {
   filter: brightness(1.15);
   transform: translateY(-2px);
 }
 
-/* LOGIN */
-.login-wrapper {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-card {
-  width: 92%;
-  max-width: 380px;
-  background: #0b0e1a;
-  border-radius: 22px;
-  padding: 26px;
-  border: 1px solid var(--border);
-  box-shadow: 0 0 40px rgba(255, 0, 157, 0.4);
-  text-align: center;
-}
-
-/* HOME */
-.home-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.home-logo-top {
-  width: 220px;
-  margin: 0 auto;
-  filter: drop-shadow(0 0 12px var(--accent));
-}
-
-/* GRID */
-.home-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 22px;
-}
-
-@media (min-width: 900px) {
-  .home-grid {
-    grid-template-columns: 2fr 1.5fr;
-  }
-}
-
-/* TIMER CYBERPUNK */
-.timer-panel {
-  text-align: center;
-}
-
-.timer-main {
-  font-size: 34px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin: 12px 0;
-}
-
-.timer-main span {
-  background: #050712;
-  padding: 6px 8px;
-  border-radius: 10px;
-  box-shadow: 0 0 18px rgba(255, 0, 157, 0.5);
-}
-
-.timer-label {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-/* TEAM CARDS */
-.teams-row {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-@media (min-width: 600px) {
-  .teams-row {
-    flex-direction: row;
-  }
-}
-
-.team-card {
-  flex: 1;
-  background: #050712;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  padding: 14px;
-  box-shadow: 0 0 18px rgba(0, 200, 255, 0.25);
-}
-
-.team-name {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.team-name.licatadrums {
-  color: var(--accent);
-}
-
-.team-name.beauties {
-  color: var(--accent2);
-}
-
-.team-points {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-/* LEADERBOARD */
-.leaderboard-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.leaderboard-item {
-  background: #050712;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  padding: 14px;
-  display: flex;
-  justify-content: space-between;
-  box-shadow: 0 0 18px rgba(255, 0, 157, 0.25);
-}
-
-.leaderboard-item.gold {
-  border-color: #ffd700;
-}
-
-.leaderboard-item.silver {
-  border-color: #c0c0c0;
-}
-
-.leaderboard-item.bronze {
-  border-color: #cd7f32;
-}
-
-/* CHAT */
-.chat-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 60px);
-}
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding-bottom: 100px;
-}
-
-.message {
-  background: #050712;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  padding: 12px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 14px rgba(0, 200, 255, 0.25);
-}
-
-.msg-author {
-  font-weight: 700;
-  color: var(--accent2);
-  margin-bottom: 4px;
-}
-
-.reply-box {
-  background: #0b0e1a;
-  padding: 6px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 4px;
-}
-
-/* CHAT INPUT */
-.chat-input-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 12px;
-  background: rgba(3, 4, 10, 0.95);
-  border-top: 1px solid var(--border);
-}
-
-.chat-input {
-  display: flex;
-  gap: 8px;
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 12px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: #050712;
-  color: var(--text);
-  font-size: 15px;
-}
-
-.chat-input button {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #050712;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-/* CALENDAR */
-.calendar-column {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.calendar-day-card-neo {
-  background: #050712;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  padding: 14px;
-  box-shadow: 0 0 18px rgba(255, 0, 157, 0.25);
-}
-
-.calendar-day-title {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.calendar-challenge {
+.text-error {
+  color: var(--danger);
   font-size: 13px;
-  color: var(--muted);
-}
-
-/* ADMIN */
-.admin-panel-neo {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.admin-card {
-  background: #050712;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  padding: 16px;
-  box-shadow: 0 0 18px rgba(0, 200, 255, 0.25);
-}
-
-.admin-card h3 {
-  font-size: 15px;
-  margin-bottom: 8px;
-  color: var(--accent2);
-}
-
-/* ANIMAZIONI */
-@keyframes spinGlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  margin-top: 6px;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 2;
 }
