@@ -1,2 +1,41 @@
+# Node modules
 node_modules/
+
+# Local environment files
 *.local
+.env
+.env.local
+.env.*.local
+
+# Vite build output
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor folders
+.vscode/
+.idea/
+
+# MacOS files
+.DS_Store
+
+# Firebase cache
+.firebase/
+.firebaserc
+
+# Firebase Functions dependencies
+functions/node_modules/
+
+# 🔥 IMPORTANTISSIMO
+# Evita di caricare il Service Account Firebase
+functions/*.json
+
+# Optional: ignore lock files if vuoi evitare conflitti
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
