@@ -6,7 +6,6 @@ import logoColori from "../assets/logo_colori.png";
 export default function LoginPage({ onLogin }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [team, setTeam] = useState("LICATADRUMS");
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
@@ -17,32 +16,40 @@ export default function LoginPage({ onLogin }) {
       return;
     }
 
-    const q = query(
-      collection(db, "users"),
-      where("name", "==", name.trim())
-    );
+    const q = query(collection(db, "users"), where("name", "==", name.trim()));
     const snap = await getDocs(q);
 
+    let userData;
+
     if (snap.empty) {
+      // CREA UTENTE NUOVO
       await addDoc(collection(db, "users"), {
         name: name.trim(),
         password: password.trim(),
-        team,
         points: 0,
+        team: "LICATADRUMS", // DEFAULT COME AVEVI TU
       });
+
+      userData = {
+        name: name.trim(),
+        team: "LICATADRUMS",
+        isAdmin: name.trim().toLowerCase() === "drums",
+      };
     } else {
+      // LOGIN UTENTE ESISTENTE
       const user = snap.docs[0].data();
+
       if (user.password !== password.trim()) {
         setError("Password errata.");
         return;
       }
-    }
 
-    const userData = {
-      name: name.trim(),
-      team,
-      isAdmin: name.trim().toLowerCase() === "drums",
-    };
+      userData = {
+        name: user.name,
+        team: user.team,
+        isAdmin: user.name.toLowerCase() === "drums",
+      };
+    }
 
     localStorage.setItem("realbityUser", JSON.stringify(userData));
     onLogin(userData);
@@ -75,18 +82,6 @@ export default function LoginPage({ onLogin }) {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
-        </div>
-
-        <div className="input-group">
-          <div className="input-label">Squadra</div>
-          <select
-            className="input-field"
-            value={team}
-            onChange={(e) => setTeam(e.target.value)}
-          >
-            <option value="LICATADRUMS">LICATADRUMS</option>
-            <option value="BEAUTIES">BEAUTIES</option>
-          </select>
         </div>
 
         {error && <div className="text-error">{error}</div>}
