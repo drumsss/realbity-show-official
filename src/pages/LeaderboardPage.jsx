@@ -12,9 +12,11 @@ export default function LeaderboardPage() {
         ...d.data(),
         points: d.data().points || 0,
       }));
+
       arr.sort((a, b) => b.points - a.points);
       setPlayers(arr);
     });
+
     return () => unsub();
   }, []);
 
@@ -38,6 +40,7 @@ export default function LeaderboardPage() {
               </div>
               <div className="leaderboard-team">{p.team}</div>
             </div>
+
             <div className="leaderboard-points">{p.points} pt</div>
           </div>
         ))}

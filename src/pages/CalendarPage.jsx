@@ -37,12 +37,13 @@ export default function CalendarPage() {
     <div className="panel">
       <div className="panel-title">Calendario sfide</div>
 
-      <div className="calendar-grid">
+      <div className="calendar-column">
         {DAYS.map((day) => {
           const list = getChallengesForDay(day.value);
           return (
-            <div key={day.value} className="calendar-day-card">
+            <div key={day.value} className="calendar-day-rect">
               <div className="calendar-day-title">{day.label}</div>
+
               {list.length === 0 ? (
                 <div className="calendar-challenge">Nessuna sfida</div>
               ) : (

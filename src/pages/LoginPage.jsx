@@ -49,6 +49,7 @@ export default function LoginPage() {
     <div className="login-wrapper">
       <div className="login-card">
         <img src={logoColori} alt="REALBITY SHOW" className="login-logo-img" />
+
         <div className="login-title">REALBITY SHOW</div>
         <div className="login-subtitle">Accedi al gioco</div>
 
@@ -74,7 +75,18 @@ export default function LoginPage() {
             />
           </div>
 
-          {error && <div className="text-error">{error}</div>}
+          {error && (
+            <div
+              style={{
+                color: "#ff4d6a",
+                fontSize: "13px",
+                marginBottom: "10px",
+                textAlign: "center",
+              }}
+            >
+              {error}
+            </div>
+          )}
 
           <button type="submit" className="button-primary">
             Entra

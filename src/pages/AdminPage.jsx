@@ -38,7 +38,7 @@ export default function AdminPage() {
     setPoints("");
   };
 
-  // Timer: usiamo sempre config/timer con endTime (ms)
+  // TIMER
   const startTimer = async () => {
     if (!timerMinutes) return;
     const minutes = Number(timerMinutes);
@@ -89,13 +89,13 @@ export default function AdminPage() {
   };
 
   return (
-    <div>
-      <div className="admin-section">
-        <h2>Pannello Admin</h2>
-      </div>
+    <div className="panel">
+      <div className="panel-title">Pannello Admin</div>
 
+      {/* SEZIONE PUNTI */}
       <div className="admin-section">
         <h3>Punti giocatori</h3>
+
         <select
           className="simple-input"
           value={selectedUserId}
@@ -121,8 +121,10 @@ export default function AdminPage() {
         </button>
       </div>
 
+      {/* SEZIONE TIMER */}
       <div className="admin-section">
         <h3>Timer prossima sfida</h3>
+
         <input
           className="simple-input"
           type="number"
@@ -131,6 +133,7 @@ export default function AdminPage() {
           value={timerMinutes}
           onChange={(e) => setTimerMinutes(e.target.value)}
         />
+
         <button className="simple-button" onClick={startTimer}>
           Start
         </button>
@@ -142,39 +145,47 @@ export default function AdminPage() {
         </button>
       </div>
 
+      {/* SEZIONE CALENDARIO */}
       <div className="admin-section">
         <h3>Sfide calendario (19–26 Giugno)</h3>
+
         <input
           className="simple-input"
           placeholder="Titolo sfida"
           value={challengeTitle}
           onChange={(e) => setChallengeTitle(e.target.value)}
         />
+
         <input
           className="simple-input"
           type="date"
           value={challengeDate}
           onChange={(e) => setChallengeDate(e.target.value)}
         />
+
         <button className="simple-button" onClick={addChallenge}>
           Aggiungi sfida
         </button>
       </div>
 
+      {/* SEZIONE NOTIFICHE */}
       <div className="admin-section">
         <h3>Notifica push</h3>
+
         <input
           className="simple-input"
           placeholder="Titolo"
           value={notifTitle}
           onChange={(e) => setNotifTitle(e.target.value)}
         />
+
         <input
           className="simple-input"
           placeholder="Messaggio"
           value={notifBody}
           onChange={(e) => setNotifBody(e.target.value)}
         />
+
         <button className="simple-button" onClick={sendNotification}>
           Invia notifica
         </button>

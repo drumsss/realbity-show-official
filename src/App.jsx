@@ -27,6 +27,7 @@ function Layout() {
 
   return (
     <div className="app-container">
+      {/* SIDEBAR DESKTOP */}
       <div className="sidebar">
         <button
           className={path === "/home" ? "active" : ""}
@@ -66,6 +67,52 @@ function Layout() {
         )}
       </div>
 
+      {/* BOTTOM BAR MOBILE */}
+      <div className="bottom-bar">
+        <button
+          className={path === "/home" ? "active" : ""}
+          onClick={() => navigate("/home")}
+        >
+          <span>🏠</span>
+          <small>Home</small>
+        </button>
+
+        <button
+          className={path === "/chat" ? "active" : ""}
+          onClick={() => navigate("/chat")}
+        >
+          <span>💬</span>
+          <small>Chat</small>
+        </button>
+
+        <button
+          className={path === "/leaderboard" ? "active" : ""}
+          onClick={() => navigate("/leaderboard")}
+        >
+          <span>🏆</span>
+          <small>Classifica</small>
+        </button>
+
+        <button
+          className={path === "/calendar" ? "active" : ""}
+          onClick={() => navigate("/calendar")}
+        >
+          <span>📅</span>
+          <small>Calendario</small>
+        </button>
+
+        {user.isAdmin && (
+          <button
+            className={path === "/admin" ? "active" : ""}
+            onClick={() => navigate("/admin")}
+          >
+            <span>🛠</span>
+            <small>Admin</small>
+          </button>
+        )}
+      </div>
+
+      {/* CONTENUTO */}
       <div className="main">
         <div className="header">
           <div className="header-left">

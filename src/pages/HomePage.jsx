@@ -10,37 +10,43 @@ export default function HomePage() {
     BEAUTIES: 0,
   });
 
-  // Timer: doc config/timer con campo endTime (ms)
+  // TIMER
   useEffect(() => {
     const timerDocRef = doc(db, "config", "timer");
     const unsub = onSnapshot(timerDocRef, (snap) => {
       if (!snap.exists()) return;
       const data = snap.data();
       const endTime = data.endTime;
+
       const update = () => {
         const now = Date.now();
         setRemaining(Math.max(0, Math.floor((endTime - now) / 1000)));
       };
+
       update();
       const interval = setInterval(update, 1000);
       return () => clearInterval(interval);
     });
+
     return () => unsub();
   }, []);
 
-  // Somma punti per squadra
+  // PUNTEGGI SQUADRE
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "users"), (snap) => {
       let lic = 0;
       let beau = 0;
+
       snap.forEach((d) => {
         const u = d.data();
         const pts = u.points || 0;
         if (u.team === "LICATADRUMS") lic += pts;
         if (u.team === "BEAUTIES") beau += pts;
       });
+
       setTeamPoints({ LICATADRUMS: lic, BEAUTIES: beau });
     });
+
     return () => unsub();
   }, []);
 
@@ -50,34 +56,34 @@ export default function HomePage() {
 
   return (
     <div className="home-wrapper">
-      {/* LOGO SEPARATO COME TITOLO */}
+      {/* LOGO */}
       <img src={logoColori} alt="REALBITY SHOW" className="home-logo-top" />
 
       <div className="home-grid">
-        {/* CARD TIMER FUTURISTICA */}
+        {/* TIMER */}
         <div className="panel timer-panel">
           <div className="panel-title">Prossima sfida</div>
+
           <div className="timer-main">
             <span>{h}</span>:<span>{m}</span>:<span>{s}</span>
           </div>
+
           <div className="timer-label">Tempo rimanente</div>
         </div>
 
-        {/* CARD PUNTEGGI SQUADRE IN PRIMO PIANO */}
+        {/* PUNTEGGI SQUADRE */}
         <div className="panel teams-panel">
           <div className="panel-title">Punteggi squadre</div>
+
           <div className="teams-row">
             <div className="team-card">
               <div className="team-name licatadrums">LICATADRUMS</div>
-              <div className="team-points">
-                {teamPoints.LICATADRUMS} pt
-              </div>
+              <div className="team-points">{teamPoints.LICATADRUMS} pt</div>
             </div>
+
             <div className="team-card">
               <div className="team-name beauties">BEAUTIES</div>
-              <div className="team-points">
-                {teamPoints.BEAUTIES} pt
-              </div>
+              <div className="team-points">{teamPoints.BEAUTIES} pt</div>
             </div>
           </div>
         </div>

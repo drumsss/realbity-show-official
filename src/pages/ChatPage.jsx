@@ -36,16 +36,22 @@ export default function ChatPage() {
 
   const user = JSON.parse(localStorage.getItem("realbityUser"));
 
+  // CARICAMENTO MESSAGGI
   useEffect(() => {
     const q = query(collection(db, "messages"), orderBy("createdAt"));
     const unsub = onSnapshot(q, (snap) => {
       const arr = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
       setMessages(arr);
-      setTimeout(() => bottomRef.current?.scrollIntoView(), 100);
+
+      setTimeout(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 80);
     });
+
     return () => unsub();
   }, []);
 
+  // PULIZIA CHAT (solo admin)
   const cleanChat = async () => {
     const snap = await getDocs(collection(db, "messages"));
     for (const d of snap.docs) {
@@ -53,6 +59,7 @@ export default function ChatPage() {
     }
   };
 
+  // INVIO TESTO
   const handleSend = async (e) => {
     e.preventDefault();
     if (!text.trim()) return;
@@ -74,6 +81,7 @@ export default function ChatPage() {
     setReplyTo(null);
   };
 
+  // AUDIO: START
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorderRef.current = new MediaRecorder(stream);
@@ -101,19 +109,25 @@ export default function ChatPage() {
     setRecording(true);
   };
 
+  // AUDIO: STOP
   const stopRecording = () => {
     if (!mediaRecorderRef.current) return;
     mediaRecorderRef.current.stop();
     setRecording(false);
   };
 
-  // Gruppo per giorno con separatori
+  // SEPARATORI GIORNO
   let lastDay = "";
   const messagesWithSeparators = [];
+
   for (const m of messages) {
     const day = formatDay(m.createdAt);
     if (day && day !== lastDay) {
-      messagesWithSeparators.push({ __separator: true, day, id: `sep-${day}` });
+      messagesWithSeparators.push({
+        __separator: true,
+        day,
+        id: `sep-${day}`,
+      });
       lastDay = day;
     }
     messagesWithSeparators.push(m);
@@ -121,6 +135,7 @@ export default function ChatPage() {
 
   return (
     <div className="chat-wrapper">
+      {/* LISTA MESSAGGI */}
       <div className="chat-messages">
         {messagesWithSeparators.map((m) =>
           m.__separator ? (
@@ -150,8 +165,16 @@ export default function ChatPage() {
         <div ref={bottomRef} />
       </div>
 
+      {/* BOX RISPOSTA */}
       {replyTo && (
-        <div className="reply-box" style={{ marginTop: 8 }}>
+        <div
+          className="reply-box"
+          style={{
+            marginTop: 6,
+            marginBottom: 4,
+            paddingLeft: 12,
+          }}
+        >
           Rispondendo a: {replyTo.text}
           <button
             className="simple-button"
@@ -163,6 +186,7 @@ export default function ChatPage() {
         </div>
       )}
 
+      {/* INPUT BAR */}
       <div className="chat-input-bar">
         <form className="chat-input" onSubmit={handleSend}>
           <input
@@ -170,7 +194,7 @@ export default function ChatPage() {
             onChange={(e) => setText(e.target.value)}
             placeholder={
               user.isAdmin
-                ? "Scrivi un messaggio... (/clean per pulire la chat)"
+                ? "Scrivi un messaggio... (/clean)"
                 : "Scrivi un messaggio..."
             }
           />
