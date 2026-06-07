@@ -145,10 +145,10 @@ export default function ChatPage() {
           ) : (
             <div
               key={m.id}
-              className="message"
+              className="message message-futuristic"
               onClick={() => setReplyTo(m)}
             >
-              <strong>{m.author}</strong>
+              <div className="msg-author">{m.author}</div>
 
               {m.replyTo && (
                 <div className="reply-box">
@@ -156,7 +156,7 @@ export default function ChatPage() {
                 </div>
               )}
 
-              {m.text && <p>{m.text}</p>}
+              {m.text && <p className="msg-text">{m.text}</p>}
               {m.audioUrl && <AudioPlayer url={m.audioUrl} />}
             </div>
           )
@@ -167,21 +167,13 @@ export default function ChatPage() {
 
       {/* BOX RISPOSTA */}
       {replyTo && (
-        <div
-          className="reply-box"
-          style={{
-            marginTop: 6,
-            marginBottom: 4,
-            paddingLeft: 12,
-          }}
-        >
+        <div className="reply-floating">
           Rispondendo a: {replyTo.text}
           <button
-            className="simple-button"
-            style={{ marginLeft: 8 }}
+            className="reply-close"
             onClick={() => setReplyTo(null)}
           >
-            X
+            ✖
           </button>
         </div>
       )}
@@ -200,16 +192,26 @@ export default function ChatPage() {
           />
 
           {!recording ? (
-            <button type="button" onClick={startRecording} title="Registra audio">
+            <button
+              type="button"
+              onClick={startRecording}
+              title="Registra audio"
+              className="btn-mic"
+            >
               🎤
             </button>
           ) : (
-            <button type="button" onClick={stopRecording} title="Ferma">
+            <button
+              type="button"
+              onClick={stopRecording}
+              title="Ferma"
+              className="btn-mic recording"
+            >
               🔴
             </button>
           )}
 
-          <button type="submit" title="Invia messaggio">
+          <button type="submit" title="Invia messaggio" className="btn-send">
             ➤
           </button>
         </form>
