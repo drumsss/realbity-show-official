@@ -1,48 +1,51 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { registerDevice } from "../notifications";
 import logoColori from "../assets/logo_colori.png";
 
-export default function LoginPage() {
+export default function LoginPage({ onLogin }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [team, setTeam] = useState("LICATADRUMS");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     setError("");
 
-    const q = query(collection(db, "users"), where("name", "==", name.trim()));
+    if (!name.trim() || !password.trim()) {
+      setError("Inserisci nome e password.");
+      return;
+    }
+
+    const q = query(
+      collection(db, "users"),
+      where("name", "==", name.trim())
+    );
     const snap = await getDocs(q);
 
     if (snap.empty) {
-      setError("Utente non trovato");
-      return;
-    }
-
-    const userDoc = snap.docs[0];
-    const user = userDoc.data();
-
-    if (user.password !== password) {
-      setError("Password errata");
-      return;
+      await addDoc(collection(db, "users"), {
+        name: name.trim(),
+        password: password.trim(),
+        team,
+        points: 0,
+      });
+    } else {
+      const user = snap.docs[0].data();
+      if (user.password !== password.trim()) {
+        setError("Password errata.");
+        return;
+      }
     }
 
     const userData = {
-      id: userDoc.id,
-      name: user.name,
-      team: user.team,
-      isAdmin: user.isAdmin || false,
-      points: user.points || 0,
+      name: name.trim(),
+      team,
+      isAdmin: name.trim().toLowerCase() === "drums",
     };
 
     localStorage.setItem("realbityUser", JSON.stringify(userData));
-    await registerDevice(userData.id);
-
-    navigate("/home");
+    onLogin(userData);
   };
 
   return (
@@ -50,48 +53,47 @@ export default function LoginPage() {
       <div className="login-card">
         <img src={logoColori} alt="REALBITY SHOW" className="login-logo-img" />
 
-        <div className="login-title">REALBITY SHOW</div>
-        <div className="login-subtitle">Accedi al gioco</div>
+        <h1 className="login-title">REALBITY SHOW</h1>
+        <p className="login-subtitle">Accedi per iniziare</p>
 
-        <form onSubmit={handleLogin}>
-          <div className="input-group">
-            <div className="input-label">Nome giocatore</div>
-            <input
-              className="input-field"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="es. drums"
-            />
-          </div>
+        <div className="input-group">
+          <div className="input-label">Nome</div>
+          <input
+            className="input-field"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Inserisci il tuo nome"
+          />
+        </div>
 
-          <div className="input-group">
-            <div className="input-label">Password</div>
-            <input
-              className="input-field"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-            />
-          </div>
+        <div className="input-group">
+          <div className="input-label">Password</div>
+          <input
+            className="input-field"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+        </div>
 
-          {error && (
-            <div
-              style={{
-                color: "#ff4d6a",
-                fontSize: "13px",
-                marginBottom: "10px",
-                textAlign: "center",
-              }}
-            >
-              {error}
-            </div>
-          )}
+        <div className="input-group">
+          <div className="input-label">Squadra</div>
+          <select
+            className="input-field"
+            value={team}
+            onChange={(e) => setTeam(e.target.value)}
+          >
+            <option value="LICATADRUMS">LICATADRUMS</option>
+            <option value="BEAUTIES">BEAUTIES</option>
+          </select>
+        </div>
 
-          <button type="submit" className="button-primary">
-            Entra
-          </button>
-        </form>
+        {error && <div className="text-error">{error}</div>}
+
+        <button className="button-primary" onClick={handleLogin}>
+          Entra
+        </button>
       </div>
     </div>
   );
