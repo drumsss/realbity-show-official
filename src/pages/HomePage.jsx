@@ -10,7 +10,6 @@ export default function HomePage() {
     BEAUTIES: 0,
   });
 
-  // TIMER
   useEffect(() => {
     const timerDocRef = doc(db, "config", "timer");
     const unsub = onSnapshot(timerDocRef, (snap) => {
@@ -31,7 +30,6 @@ export default function HomePage() {
     return () => unsub();
   }, []);
 
-  // PUNTEGGI SQUADRE
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "users"), (snap) => {
       let lic = 0;
@@ -59,18 +57,20 @@ export default function HomePage() {
       <img src={logoColori} alt="REALBITY SHOW" className="home-logo-top" />
 
       <div className="home-grid">
-        {/* TIMER */}
         <div className="panel timer-panel">
           <div className="panel-title">Prossima sfida</div>
 
           <div className="timer-main">
-            <span>{h}</span>:<span>{m}</span>:<span>{s}</span>
+            <span>{h}</span>
+            <span className="time-separator">:</span>
+            <span>{m}</span>
+            <span className="time-separator">:</span>
+            <span>{s}</span>
           </div>
 
           <div className="timer-label">Tempo rimanente</div>
         </div>
 
-        {/* PUNTEGGI SQUADRE */}
         <div className="panel teams-panel">
           <div className="panel-title">Punteggi squadre</div>
 

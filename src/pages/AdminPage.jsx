@@ -92,10 +92,10 @@ export default function AdminPage() {
       <div className="panel-title">Pannello Admin</div>
 
       <div className="admin-card">
-        <h3>Punti giocatori</h3>
+        <h3>Gestione punti</h3>
 
         <select
-          className="simple-input"
+          className="input-field"
           value={selectedUserId}
           onChange={(e) => setSelectedUserId(e.target.value)}
         >
@@ -108,7 +108,7 @@ export default function AdminPage() {
         </select>
 
         <input
-          className="simple-input"
+          className="input-field"
           placeholder="Nuovi punti (numero)"
           value={points}
           onChange={(e) => setPoints(e.target.value)}
@@ -123,7 +123,7 @@ export default function AdminPage() {
         <h3>Timer prossima sfida</h3>
 
         <input
-          className="simple-input"
+          className="input-field"
           type="number"
           min="1"
           placeholder="Minuti"
@@ -131,29 +131,31 @@ export default function AdminPage() {
           onChange={(e) => setTimerMinutes(e.target.value)}
         />
 
-        <button className="simple-button" onClick={startTimer}>
-          Start
-        </button>
-        <button className="simple-button" onClick={stopTimer}>
-          Stop
-        </button>
-        <button className="simple-button" onClick={resetTimer}>
-          Reset
-        </button>
+        <div className="admin-timer-buttons">
+          <button className="simple-button" onClick={startTimer}>
+            Start
+          </button>
+          <button className="simple-button" onClick={stopTimer}>
+            Stop
+          </button>
+          <button className="simple-button" onClick={resetTimer}>
+            Reset
+          </button>
+        </div>
       </div>
 
       <div className="admin-card">
-        <h3>Aggiungi sfida calendario</h3>
+        <h3>Aggiungi sfida al calendario</h3>
 
         <input
-          className="simple-input"
+          className="input-field"
           placeholder="Titolo sfida"
           value={challengeTitle}
           onChange={(e) => setChallengeTitle(e.target.value)}
         />
 
         <input
-          className="simple-input"
+          className="input-field"
           type="date"
           value={challengeDate}
           onChange={(e) => setChallengeDate(e.target.value)}
@@ -168,14 +170,14 @@ export default function AdminPage() {
         <h3>Notifica push</h3>
 
         <input
-          className="simple-input"
+          className="input-field"
           placeholder="Titolo"
           value={notifTitle}
           onChange={(e) => setNotifTitle(e.target.value)}
         />
 
         <input
-          className="simple-input"
+          className="input-field"
           placeholder="Messaggio"
           value={notifBody}
           onChange={(e) => setNotifBody(e.target.value)}

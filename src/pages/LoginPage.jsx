@@ -22,12 +22,11 @@ export default function LoginPage({ onLogin }) {
     let userData;
 
     if (snap.empty) {
-      // CREA UTENTE NUOVO
       await addDoc(collection(db, "users"), {
         name: name.trim(),
         password: password.trim(),
         points: 0,
-        team: "LICATADRUMS", // DEFAULT COME AVEVI TU
+        team: "LICATADRUMS",
       });
 
       userData = {
@@ -36,7 +35,6 @@ export default function LoginPage({ onLogin }) {
         isAdmin: name.trim().toLowerCase() === "drums",
       };
     } else {
-      // LOGIN UTENTE ESISTENTE
       const user = snap.docs[0].data();
 
       if (user.password !== password.trim()) {
@@ -56,11 +54,11 @@ export default function LoginPage({ onLogin }) {
   };
 
   return (
-    <div className="login-wrapper">
-      <div className="login-card">
+    <div className="login-wrapper scanlines">
+      <div className="login-card neon-border">
         <img src={logoColori} alt="REALBITY SHOW" className="login-logo-img" />
 
-        <h1 className="login-title">REALBITY SHOW</h1>
+        <h1 className="login-title glitch">REALBITY SHOW</h1>
         <p className="login-subtitle">Accedi per iniziare</p>
 
         <div className="input-group">

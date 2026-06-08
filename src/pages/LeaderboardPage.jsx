@@ -32,11 +32,13 @@ export default function LeaderboardPage() {
       <div className="leaderboard-list">
         {players.map((p, idx) => (
           <div key={p.id} className={getClassForIndex(idx)}>
-            <div>
-              <div className="leaderboard-name">
-                #{idx + 1} {p.name}
+            <div className="leaderboard-left">
+              <div className="leaderboard-rank">#{idx + 1}</div>
+
+              <div className="leaderboard-info">
+                <div className="leaderboard-name">{p.name}</div>
+                <div className="leaderboard-team">{p.team}</div>
               </div>
-              <div className="leaderboard-team">{p.team}</div>
             </div>
 
             <div className="leaderboard-points">{p.points} pt</div>
