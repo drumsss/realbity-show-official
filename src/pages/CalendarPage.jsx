@@ -29,26 +29,41 @@ export default function CalendarPage() {
     challenges.filter((c) => c.date === value);
 
   return (
-    <div className="panel">
-      <div className="panel-title">Calendario sfide</div>
+    <div className="panel neon-border glow-soft">
+      <div className="panel-title glitch">Calendario sfide</div>
 
       <div className="calendar-column">
         {DAYS.map((day) => {
           const list = getChallengesForDay(day.value);
 
           return (
-            <div key={day.value} className="calendar-day-card-neo">
-              <div className="calendar-day-title">{day.label}</div>
+            <div
+              key={day.value}
+              className="calendar-day-card-neo calendar-3d neon-border"
+            >
+              <div className="calendar-day-header">
+                <div className="calendar-day-title">{day.label}</div>
+                <div className="calendar-day-pill">
+                  {list.length === 0
+                    ? "Nessuna sfida"
+                    : `${list.length} sfida${list.length > 1 ? "e" : ""}`}
+                </div>
+              </div>
 
-              {list.length === 0 ? (
-                <div className="calendar-challenge">Nessuna sfida</div>
-              ) : (
-                list.map((c) => (
-                  <div key={c.id} className="calendar-challenge">
-                    • {c.title}
+              <div className="calendar-day-body">
+                {list.length === 0 ? (
+                  <div className="calendar-challenge muted">
+                    Nessuna sfida programmata
                   </div>
-                ))
-              )}
+                ) : (
+                  list.map((c) => (
+                    <div key={c.id} className="calendar-challenge">
+                      <span className="calendar-bullet">•</span>
+                      <span>{c.title}</span>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           );
         })}

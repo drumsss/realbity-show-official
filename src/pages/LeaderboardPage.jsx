@@ -19,21 +19,30 @@ export default function LeaderboardPage() {
   }, []);
 
   const getClassForIndex = (idx) => {
-    if (idx === 0) return "leaderboard-item gold";
-    if (idx === 1) return "leaderboard-item silver";
-    if (idx === 2) return "leaderboard-item bronze";
-    return "leaderboard-item";
+    if (idx === 0) return "leaderboard-item leaderboard-3d gold";
+    if (idx === 1) return "leaderboard-item leaderboard-3d silver";
+    if (idx === 2) return "leaderboard-item leaderboard-3d bronze";
+    return "leaderboard-item leaderboard-3d";
+  };
+
+  const getMedal = (idx) => {
+    if (idx === 0) return "🥇";
+    if (idx === 1) return "🥈";
+    if (idx === 2) return "🥉";
+    return "";
   };
 
   return (
-    <div className="panel">
-      <div className="panel-title">Classifica giocatori</div>
+    <div className="panel neon-border glow-soft">
+      <div className="panel-title glitch">Classifica giocatori</div>
 
       <div className="leaderboard-list">
         {players.map((p, idx) => (
           <div key={p.id} className={getClassForIndex(idx)}>
             <div className="leaderboard-left">
-              <div className="leaderboard-rank">#{idx + 1}</div>
+              <div className="leaderboard-rank">
+                {getMedal(idx) || `#${idx + 1}`}
+              </div>
 
               <div className="leaderboard-info">
                 <div className="leaderboard-name">{p.name}</div>

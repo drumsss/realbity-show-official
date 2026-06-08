@@ -63,9 +63,14 @@ body {
   transition: 0.2s;
 }
 
+.bottom-bar button span {
+  font-size: 11px;
+}
+
 .bottom-bar button.active {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent);
+  transform: translateY(-1px);
 }
 
 /* PAGE */
@@ -76,7 +81,7 @@ body {
   overflow-y: auto;
 }
 
-/* PANEL */
+/* PANEL BASE */
 .panel {
   background: linear-gradient(135deg, #0b0e1a, #11162a);
   border: 1px solid var(--border);
@@ -85,7 +90,7 @@ body {
   position: relative;
 }
 
-.panel.neon-border,
+/* NEON / GLOW */
 .neon-border {
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
@@ -95,6 +100,7 @@ body {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.12);
 }
 
+/* PANEL TITLE */
 .panel-title {
   font-size: 15px;
   font-weight: 600;
@@ -117,6 +123,13 @@ select {
   transition: 0.2s;
 }
 
+.input-field:focus,
+.simple-input:focus,
+select:focus {
+  border-color: var(--accent2);
+  box-shadow: 0 0 10px var(--accent2);
+}
+
 .neon-input:focus {
   border-color: var(--accent2);
   box-shadow: 0 0 12px var(--accent2);
@@ -135,6 +148,8 @@ select {
   transition: 0.2s;
 }
 
+.button-primary:hover,
+.simple-button:hover,
 .neon-button:hover {
   filter: brightness(1.25);
   box-shadow: 0 0 12px var(--accent2);
@@ -244,6 +259,11 @@ select {
   padding: 12px;
 }
 
+.team-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .team-name.licatadrums {
   color: var(--accent);
   text-shadow: 0 0 6px var(--accent);
@@ -254,21 +274,102 @@ select {
   text-shadow: 0 0 6px var(--accent2);
 }
 
+.team-points {
+  font-size: 18px;
+  font-weight: 700;
+}
+
 /* LEADERBOARD */
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .leaderboard-item {
   background: #050712;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid var(--border);
-  padding: 12px;
+  padding: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: 0.2s;
 }
 
-.leaderboard-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 12px var(--accent2);
+/* 3D EFFECT */
+.leaderboard-3d {
+  position: relative;
+  overflow: hidden;
+  transform: perspective(600px) translateZ(0);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.leaderboard-3d::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at top left, rgba(255, 0, 157, 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.leaderboard-3d:hover {
+  transform: perspective(600px) translateZ(12px) translateY(-3px);
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.35);
+}
+
+.leaderboard-3d:hover::before {
+  opacity: 1;
+}
+
+.leaderboard-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.leaderboard-rank {
+  font-size: 20px;
+  font-weight: 700;
+  width: 48px;
+  text-align: center;
+}
+
+.leaderboard-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.leaderboard-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.leaderboard-team {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.leaderboard-points {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* PODIO COLORI */
+.leaderboard-item.gold {
+  border-color: #ffd700;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.4);
+}
+
+.leaderboard-item.silver {
+  border-color: #c0c0c0;
+  box-shadow: 0 0 18px rgba(192, 192, 192, 0.4);
+}
+
+.leaderboard-item.bronze {
+  border-color: #cd7f32;
+  box-shadow: 0 0 18px rgba(205, 127, 50, 0.4);
 }
 
 /* CHAT */
@@ -298,7 +399,46 @@ select {
   text-shadow: 0 0 6px var(--accent2);
 }
 
-/* CHAT INPUT FIX */
+.msg-text {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.reply-box {
+  background: #0b0e1a;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.chat-day-separator {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 8px 0;
+}
+
+/* REPLY FLOATING */
+.reply-floating {
+  position: fixed;
+  bottom: 72px;
+  left: 12px;
+  right: 12px;
+  background: #050712;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 998;
+}
+
+/* CHAT INPUT */
 .chat-input-bar {
   position: fixed;
   bottom: 62px;
@@ -340,6 +480,108 @@ select {
 
 .btn-send:hover {
   box-shadow: 0 0 12px var(--accent2);
+}
+
+/* CALENDAR */
+.calendar-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calendar-day-card-neo {
+  background: #050712;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 12px;
+}
+
+/* 3D EFFECT CALENDAR */
+.calendar-3d {
+  position: relative;
+  overflow: hidden;
+  transform: perspective(600px) translateZ(0);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.calendar-3d::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at top right, rgba(0, 200, 255, 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.calendar-3d:hover {
+  transform: perspective(600px) translateZ(10px) translateY(-2px);
+  box-shadow: 0 0 18px rgba(0, 200, 255, 0.35);
+}
+
+.calendar-3d:hover::before {
+  opacity: 1;
+}
+
+.calendar-day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.calendar-day-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.calendar-day-pill {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--accent2);
+  color: var(--accent2);
+}
+
+.calendar-day-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calendar-challenge {
+  font-size: 13px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.calendar-challenge.muted {
+  color: var(--muted);
+}
+
+.calendar-bullet {
+  color: var(--accent2);
+}
+
+/* ADMIN */
+.admin-panel-neo {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-card {
+  background: #050712;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 12px;
+}
+
+.admin-card h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: var(--accent2);
 }
 
 /* SCANLINES */
