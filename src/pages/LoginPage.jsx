@@ -55,7 +55,7 @@ export default function LoginPage({ onLogin }) {
 
   return (
     <div className="login-wrapper scanlines">
-      <div className="login-card neon-border">
+      <div className="login-card neon-border glow-soft">
         <img src={logoColori} alt="REALBITY SHOW" className="login-logo-img" />
 
         <h1 className="login-title glitch">REALBITY SHOW</h1>
@@ -64,7 +64,7 @@ export default function LoginPage({ onLogin }) {
         <div className="input-group">
           <div className="input-label">Nome</div>
           <input
-            className="input-field"
+            className="input-field neon-input"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Inserisci il tuo nome"
@@ -74,7 +74,7 @@ export default function LoginPage({ onLogin }) {
         <div className="input-group">
           <div className="input-label">Password</div>
           <input
-            className="input-field"
+            className="input-field neon-input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -84,7 +84,7 @@ export default function LoginPage({ onLogin }) {
 
         {error && <div className="text-error">{error}</div>}
 
-        <button className="button-primary" onClick={handleLogin}>
+        <button className="button-primary neon-button" onClick={handleLogin}>
           Entra
         </button>
       </div>

@@ -9,15 +9,19 @@ import AdminPage from "./pages/AdminPage";
 export default function App() {
   const [page, setPage] = useState("home");
 
+  // 🔥 LOGIN SEMPRE PRIMA COSA
   const user = JSON.parse(localStorage.getItem("realbityUser"));
 
   const handleLogin = () => {
     window.location.reload();
   };
 
-  // LOGIN SEMPRE PRIMA COSA
   if (!user) {
-    return <LoginPage onLogin={handleLogin} />;
+    return (
+      <div className="login-screen">
+        <LoginPage onLogin={handleLogin} />
+      </div>
+    );
   }
 
   const renderPage = () => {
@@ -42,7 +46,7 @@ export default function App() {
       <div className="page">{renderPage()}</div>
 
       {/* MENU MOBILE */}
-      <div className="bottom-bar">
+      <div className="bottom-bar neon-border">
         <button className={page === "home" ? "active" : ""} onClick={() => setPage("home")}>
           🏠 <span>Home</span>
         </button>

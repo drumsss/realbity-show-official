@@ -100,7 +100,7 @@ export default function ChatPage() {
           ) : (
             <div
               key={m.id}
-              className="message message-futuristic neon-border"
+              className="message message-futuristic neon-border glow-soft"
               onClick={() => setReplyTo(m)}
             >
               <div className="msg-author">{m.author}</div>
@@ -120,7 +120,7 @@ export default function ChatPage() {
       </div>
 
       {replyTo && (
-        <div className="reply-floating">
+        <div className="reply-floating neon-border">
           Rispondendo a: {replyTo.text}
           <button className="reply-close" onClick={() => setReplyTo(null)}>
             ✖
@@ -128,15 +128,16 @@ export default function ChatPage() {
         </div>
       )}
 
-      <div className="chat-input-bar neon-border">
+      <div className="chat-input-bar neon-border glow-soft">
         <form className="chat-input" onSubmit={handleSend}>
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Scrivi un messaggio..."
+            className="neon-input"
           />
 
-          <button type="submit" className="btn-send">
+          <button type="submit" className="btn-send neon-button">
             ➤
           </button>
         </form>
